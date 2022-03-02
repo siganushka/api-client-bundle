@@ -1,0 +1,39 @@
+{
+    "name": "siganushka/api-client-bundle",
+    "description": "API Client Bundle.",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "siganushka",
+            "email": "siganushka@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "symfony/http-kernel": "^5.4|^6.0",
+        "symfony/dependency-injection": "^5.4|^6.0",
+        "symfony/config": "^5.4|^6.0",
+        "siganushka/api-client": "@dev"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^5.4|^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Siganushka\\ApiClientBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Siganushka\\ApiClientBundle\\Tests\\": "tests/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../api-client"
+        }
+    ],
+    "minimum-stability": "dev"
+}
