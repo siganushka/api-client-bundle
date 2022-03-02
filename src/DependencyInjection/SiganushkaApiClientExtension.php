@@ -22,26 +22,19 @@ class SiganushkaApiClientExtension extends Extension
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        dd($config);
 
         if ($this->isConfigEnabled($container, $config['wechat'])) {
+            if (!InstalledVersions::isInstalled('siganushka/wechat-api')) {
+                throw new \LogicException('Wechat API support cannot be enabled as the Wechat API is not installed. Try running "composer require siganushka/wechat-api".');
+            }
+
             $this->registerWechatConfiguration($config['wechat'], $container, $loader);
         }
-
-        // foreach ([
-        //     'siganushka/wechat-api',
-        // ] as $packageName) {
-        //     if (!InstalledVersions::isInstalled($packageName)) {
-        //         continue;
-        //     }
-
-        //     $configFile = sprintf('%s/config/services.php', InstalledVersions::getInstallPath($packageName));
-        //     if (is_file($configFile)) {
-        //         $loader->load($configFile);
-        //     }
-        // }
     }
 
+    /**
+     * @param array<mixed> $config
+     */
     private function registerWechatConfiguration(array $config, ContainerBuilder $container, PhpFileLoader $loader): void
     {
         $loader->load('wechat.php');
@@ -50,6 +43,11 @@ class SiganushkaApiClientExtension extends Extension
         $configurationDef->setArgument(0, [
             'appid' => $config['appid'],
             'appsecret' => $config['appsecret'],
+            'mchid' => $config['mchid'],
+            'mchkey' => $config['mchkey'],
+            'client_cert_file' => $config['client_cert_file'],
+            'client_key_file' => $config['client_key_file'],
+            'sign_type' => $config['sign_type'],
         ]);
     }
 }
