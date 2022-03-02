@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Siganushka\ApiClientBundle\Tests\DependencyInjection;
 
 use PHPUnit\Framework\TestCase;
+use Siganushka\ApiClient\Github\Authorize;
+use Siganushka\ApiClient\Github\Configuration as GithubConfiguration;
 use Siganushka\ApiClient\RequestClientInterface;
 use Siganushka\ApiClient\RequestRegistryInterface;
-use Siganushka\ApiClient\Wechat\Configuration;
-use Siganushka\ApiClient\Wechat\Payment\ParameterManager;
-use Siganushka\ApiClient\Wechat\Payment\SignatureManager;
+use Siganushka\ApiClient\Wechat\Configuration as WechatConfiguration;
+use Siganushka\ApiClient\Wechat\Payment\ParameterUtils;
+use Siganushka\ApiClient\Wechat\Payment\SignatureUtils;
 use Siganushka\ApiClientBundle\DependencyInjection\SiganushkaApiClientExtension;
 use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -19,7 +21,6 @@ class SiganushkaApiClientExtensionTest extends TestCase
     public function testAll(): void
     {
         $container = $this->createContainerWithConfigs([]);
-        // dd($container->getServiceIds());
 
         static::assertTrue($container->hasDefinition('siganushka.api_client.request_registry'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.request_client'));
@@ -51,17 +52,17 @@ class SiganushkaApiClientExtensionTest extends TestCase
         ]);
 
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.configuration'));
-        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.parameter_manager'));
-        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.signature_manager'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.parameter_utils'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.signature_utils'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.core.access_token_request'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.core.server_ip_request'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.miniapp.session_key_request'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.payment.unifiedorder_request'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.payment.transfer_request'));
 
-        static::assertTrue($container->hasAlias(Configuration::class));
-        static::assertTrue($container->hasAlias(ParameterManager::class));
-        static::assertTrue($container->hasAlias(SignatureManager::class));
+        static::assertTrue($container->hasAlias(WechatConfiguration::class));
+        static::assertTrue($container->hasAlias(ParameterUtils::class));
+        static::assertTrue($container->hasAlias(SignatureUtils::class));
 
         $configurationDef = $container->getDefinition('siganushka.api_client.wechat.configuration');
         /**
@@ -84,6 +85,38 @@ class SiganushkaApiClientExtensionTest extends TestCase
         static::assertSame($configs['client_cert_file'], $configurationArgs['client_cert_file']);
         static::assertSame($configs['client_key_file'], $configurationArgs['client_key_file']);
         static::assertSame($configs['sign_type'], $configurationArgs['sign_type']);
+    }
+
+    public function testWithGithubConfigs(): void
+    {
+        $configs = [
+            'client_id' => 'test_client_id',
+            'client_secret' => 'test_client_secret',
+        ];
+
+        $container = $this->createContainerWithConfigs([
+            ['github' => $configs],
+        ]);
+
+        static::assertTrue($container->hasDefinition('siganushka.api_client.github.configuration'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.github.authorize'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.github.access_token_request'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.github.user_request'));
+
+        static::assertTrue($container->hasAlias(GithubConfiguration::class));
+        static::assertTrue($container->hasAlias(Authorize::class));
+
+        $configurationDef = $container->getDefinition('siganushka.api_client.github.configuration');
+        /**
+         * @var array{
+         *  client_id: string,
+         *  client_secret: string
+         * }
+         */
+        $configurationArgs = $configurationDef->getArgument(0);
+
+        static::assertSame($configs['client_id'], $configurationArgs['client_id']);
+        static::assertSame($configs['client_secret'], $configurationArgs['client_secret']);
     }
 
     /**

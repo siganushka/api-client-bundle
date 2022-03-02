@@ -17,6 +17,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
 
         $this->addWechatSection($rootNode);
+        $this->addGithubSection($rootNode);
 
         return $treeBuilder;
     }
@@ -36,6 +37,22 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('client_cert_file')->defaultNull()->end()
                         ->scalarNode('client_key_file')->defaultNull()->end()
                         ->scalarNode('sign_type')->defaultValue('MD5')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addGithubSection(ArrayNodeDefinition $rootNode): void
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('github')
+                    ->info('github configuration')
+                    ->canBeEnabled()
+                    ->children()
+                        ->scalarNode('client_id')->cannotBeEmpty()->isRequired()->end()
+                        ->scalarNode('client_secret')->cannotBeEmpty()->isRequired()->end()
                     ->end()
                 ->end()
             ->end()

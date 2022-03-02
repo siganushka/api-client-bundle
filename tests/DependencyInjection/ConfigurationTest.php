@@ -46,6 +46,9 @@ final class ConfigurationTest extends TestCase
                 'client_key_file' => null,
                 'sign_type' => 'MD5',
             ],
+            'github' => [
+                'enabled' => false,
+            ],
         ]);
     }
 
@@ -93,6 +96,48 @@ final class ConfigurationTest extends TestCase
 
         $this->processor->processConfiguration($this->configuration, [
             ['wechat' => $config],
+        ]);
+    }
+
+    public function testCustomGithub(): void
+    {
+        $config = [
+            'client_id' => 'test_client_id',
+            'client_secret' => 'test_client_secret',
+        ];
+
+        $processedConfig = $this->processor->processConfiguration($this->configuration, [
+            ['github' => $config],
+        ]);
+
+        static::assertSame($processedConfig['github'], array_merge($config, ['enabled' => true]));
+    }
+
+    public function testCustomGithubMissingClientIdException(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('The child config "client_id" under "siganushka_api_client.github" must be configured');
+
+        $config = [
+            'client_secret' => 'test_client_secret',
+        ];
+
+        $this->processor->processConfiguration($this->configuration, [
+            ['github' => $config],
+        ]);
+    }
+
+    public function testCustomGithubMissingAppsecretException(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('The child config "client_secret" under "siganushka_api_client.github" must be configured');
+
+        $config = [
+            'client_id' => 'test_client_id',
+        ];
+
+        $this->processor->processConfiguration($this->configuration, [
+            ['github' => $config],
         ]);
     }
 }

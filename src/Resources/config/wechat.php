@@ -8,23 +8,23 @@ use Siganushka\ApiClient\Wechat\Configuration;
 use Siganushka\ApiClient\Wechat\Core\Request\AccessTokenRequest;
 use Siganushka\ApiClient\Wechat\Core\Request\ServerIpRequest;
 use Siganushka\ApiClient\Wechat\Miniapp\Request\SessionKeyRequest;
-use Siganushka\ApiClient\Wechat\Payment\ParameterManager;
+use Siganushka\ApiClient\Wechat\Payment\ParameterUtils;
 use Siganushka\ApiClient\Wechat\Payment\Request\TransferRequest;
 use Siganushka\ApiClient\Wechat\Payment\Request\UnifiedorderRequest;
-use Siganushka\ApiClient\Wechat\Payment\SignatureManager;
+use Siganushka\ApiClient\Wechat\Payment\SignatureUtils;
 
 return static function (ContainerConfigurator $container) {
     $container->services()
         ->set('siganushka.api_client.wechat.configuration', Configuration::class)
             ->alias(Configuration::class, 'siganushka.api_client.wechat.configuration')
 
-        ->set('siganushka.api_client.wechat.parameter_manager', ParameterManager::class)
+        ->set('siganushka.api_client.wechat.parameter_utils', ParameterUtils::class)
             ->arg(0, service('siganushka.api_client.wechat.configuration'))
-            ->alias(ParameterManager::class, 'siganushka.api_client.wechat.parameter_manager')
+            ->alias(ParameterUtils::class, 'siganushka.api_client.wechat.parameter_utils')
 
-        ->set('siganushka.api_client.wechat.signature_manager', SignatureManager::class)
+        ->set('siganushka.api_client.wechat.signature_utils', SignatureUtils::class)
             ->arg(0, service('siganushka.api_client.wechat.configuration'))
-            ->alias(SignatureManager::class, 'siganushka.api_client.wechat.signature_manager')
+            ->alias(SignatureUtils::class, 'siganushka.api_client.wechat.signature_utils')
 
         ->set('siganushka.api_client.wechat.core.access_token_request', AccessTokenRequest::class)
             ->arg(0, service('siganushka.api_client.wechat.configuration'))

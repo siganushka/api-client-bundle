@@ -30,6 +30,14 @@ class SiganushkaApiClientExtension extends Extension
 
             $this->registerWechatConfiguration($config['wechat'], $container, $loader);
         }
+
+        if ($this->isConfigEnabled($container, $config['github'])) {
+            if (!InstalledVersions::isInstalled('siganushka/github-api')) {
+                throw new \LogicException('Github API support cannot be enabled as the Github API is not installed. Try running "composer require siganushka/github-api".');
+            }
+
+            $this->registerGithubConfiguration($config['github'], $container, $loader);
+        }
     }
 
     /**
@@ -48,6 +56,20 @@ class SiganushkaApiClientExtension extends Extension
             'client_cert_file' => $config['client_cert_file'],
             'client_key_file' => $config['client_key_file'],
             'sign_type' => $config['sign_type'],
+        ]);
+    }
+
+    /**
+     * @param array<mixed> $config
+     */
+    private function registerGithubConfiguration(array $config, ContainerBuilder $container, PhpFileLoader $loader): void
+    {
+        $loader->load('github.php');
+
+        $configurationDef = $container->getDefinition('siganushka.api_client.github.configuration');
+        $configurationDef->setArgument(0, [
+            'client_id' => $config['client_id'],
+            'client_secret' => $config['client_secret'],
         ]);
     }
 }

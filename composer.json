@@ -18,7 +18,8 @@
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.4|^6.0",
-        "siganushka/wechat-api": "@dev"
+        "siganushka/wechat-api": "@dev",
+        "siganushka/github-api": "@dev"
     },
     "autoload": {
         "psr-4": {
@@ -38,6 +39,10 @@
         {
             "type": "path",
             "url": "../wechat-api"
+        },
+        {
+            "type": "path",
+            "url": "../github-api"
         }
     ],
     "minimum-stability": "dev"
