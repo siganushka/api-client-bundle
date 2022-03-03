@@ -14,12 +14,12 @@
         "symfony/http-kernel": "^5.4|^6.0",
         "symfony/dependency-injection": "^5.4|^6.0",
         "symfony/config": "^5.4|^6.0",
-        "siganushka/api-client": "@dev"
+        "siganushka/api-client": "dev-main"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.4|^6.0",
-        "siganushka/wechat-api": "@dev",
-        "siganushka/github-api": "@dev"
+        "siganushka/wechat-api": "dev-main",
+        "siganushka/github-api": "dev-main"
     },
     "autoload": {
         "psr-4": {
@@ -31,19 +31,5 @@
             "Siganushka\\ApiClientBundle\\Tests\\": "tests/"
         }
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../api-client"
-        },
-        {
-            "type": "path",
-            "url": "../wechat-api"
-        },
-        {
-            "type": "path",
-            "url": "../github-api"
-        }
-    ],
     "minimum-stability": "dev"
 }
