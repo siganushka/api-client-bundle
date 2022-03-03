@@ -7,4 +7,4 @@ parameters:
     bootstrapFiles:
         - vendor/bin/.phpunit/phpunit/vendor/autoload.php
     ignoreErrors:
-        - '#Cannot call method scalarNode#'
+        - '#Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface#'
