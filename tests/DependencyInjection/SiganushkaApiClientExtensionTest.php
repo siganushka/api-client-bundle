@@ -32,7 +32,8 @@ class SiganushkaApiClientExtensionTest extends TestCase
 
         $requestClientDef = $container->getDefinition('siganushka.api_client.request_client');
         static::assertSame('http_client', (string) $requestClientDef->getArgument(0));
-        static::assertSame('siganushka.api_client.request_registry', (string) $requestClientDef->getArgument(1));
+        static::assertSame('cache.app', (string) $requestClientDef->getArgument(1));
+        static::assertSame('siganushka.api_client.request_registry', (string) $requestClientDef->getArgument(2));
     }
 
     public function testWithWechatConfigs(): void

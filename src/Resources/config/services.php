@@ -17,7 +17,8 @@ return static function (ContainerConfigurator $container) {
 
         ->set('siganushka.api_client.request_client', RequestClient::class)
             ->arg(0, service('http_client'))
-            ->arg(1, service('siganushka.api_client.request_registry'))
+            ->arg(1, service('cache.app'))
+            ->arg(2, service('siganushka.api_client.request_registry'))
             ->alias(RequestClientInterface::class, 'siganushka.api_client.request_client')
     ;
 };
