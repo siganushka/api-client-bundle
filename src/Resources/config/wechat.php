@@ -18,14 +18,6 @@ return static function (ContainerConfigurator $container) {
         ->set('siganushka.api_client.wechat.configuration', Configuration::class)
             ->alias(Configuration::class, 'siganushka.api_client.wechat.configuration')
 
-        ->set('siganushka.api_client.wechat.parameter_utils', ParameterUtils::class)
-            ->arg(0, service('siganushka.api_client.wechat.configuration'))
-            ->alias(ParameterUtils::class, 'siganushka.api_client.wechat.parameter_utils')
-
-        ->set('siganushka.api_client.wechat.signature_utils', SignatureUtils::class)
-            ->arg(0, service('siganushka.api_client.wechat.configuration'))
-            ->alias(SignatureUtils::class, 'siganushka.api_client.wechat.signature_utils')
-
         ->set('siganushka.api_client.wechat.core.access_token_request', AccessTokenRequest::class)
             ->arg(0, service('siganushka.api_client.wechat.configuration'))
             ->tag('siganushka.api_client.request')
@@ -36,6 +28,14 @@ return static function (ContainerConfigurator $container) {
         ->set('siganushka.api_client.wechat.miniapp.session_key_request', SessionKeyRequest::class)
             ->arg(0, service('siganushka.api_client.wechat.configuration'))
             ->tag('siganushka.api_client.request')
+
+        ->set('siganushka.api_client.wechat.payment.parameter_utils', ParameterUtils::class)
+            ->arg(0, service('siganushka.api_client.wechat.configuration'))
+            ->alias(ParameterUtils::class, 'siganushka.api_client.wechat.payment.parameter_utils')
+
+        ->set('siganushka.api_client.wechat.payment.signature_utils', SignatureUtils::class)
+            ->arg(0, service('siganushka.api_client.wechat.configuration'))
+            ->alias(SignatureUtils::class, 'siganushka.api_client.wechat.payment.signature_utils')
 
         ->set('siganushka.api_client.wechat.payment.unifiedorder_request', UnifiedorderRequest::class)
             ->arg(0, service('siganushka.api_client.wechat.configuration'))

@@ -48,16 +48,14 @@ class SiganushkaApiClientExtensionTest extends TestCase
             'sign_type' => 'test_sign_type',
         ];
 
-        $container = $this->createContainerWithConfigs([
-            ['wechat' => $configs],
-        ]);
+        $container = $this->createContainerWithConfigs(['wechat' => $configs]);
 
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.configuration'));
-        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.parameter_utils'));
-        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.signature_utils'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.core.access_token_request'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.core.server_ip_request'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.miniapp.session_key_request'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.payment.parameter_utils'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.payment.signature_utils'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.payment.unifiedorder_request'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.payment.transfer_request'));
 
@@ -95,9 +93,7 @@ class SiganushkaApiClientExtensionTest extends TestCase
             'client_secret' => 'test_client_secret',
         ];
 
-        $container = $this->createContainerWithConfigs([
-            ['github' => $configs],
-        ]);
+        $container = $this->createContainerWithConfigs(['github' => $configs]);
 
         static::assertTrue($container->hasDefinition('siganushka.api_client.github.configuration'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.github.authorize'));
@@ -128,7 +124,7 @@ class SiganushkaApiClientExtensionTest extends TestCase
         $container = new ContainerBuilder();
 
         $extension = new SiganushkaApiClientExtension();
-        $extension->load($configs, $container);
+        $extension->load([$configs], $container);
 
         return $container;
     }
