@@ -51,13 +51,13 @@ class SiganushkaApiClientExtensionTest extends TestCase
         $container = $this->createContainerWithConfigs(['wechat' => $configs]);
 
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.configuration'));
-        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.core.access_token_request'));
-        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.core.server_ip_request'));
-        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.miniapp.session_key_request'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.core.access_token'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.core.server_ip'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.miniapp.session_key'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.payment.parameter_utils'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.payment.signature_utils'));
-        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.payment.unifiedorder_request'));
-        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.payment.transfer_request'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.payment.unifiedorder'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.wechat.payment.transfer'));
 
         static::assertTrue($container->hasAlias(WechatConfiguration::class));
         static::assertTrue($container->hasAlias(ParameterUtils::class));
@@ -97,8 +97,8 @@ class SiganushkaApiClientExtensionTest extends TestCase
 
         static::assertTrue($container->hasDefinition('siganushka.api_client.github.configuration'));
         static::assertTrue($container->hasDefinition('siganushka.api_client.github.authorize'));
-        static::assertTrue($container->hasDefinition('siganushka.api_client.github.access_token_request'));
-        static::assertTrue($container->hasDefinition('siganushka.api_client.github.user_request'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.github.access_token'));
+        static::assertTrue($container->hasDefinition('siganushka.api_client.github.user'));
 
         static::assertTrue($container->hasAlias(GithubConfiguration::class));
         static::assertTrue($container->hasAlias(Authorize::class));
