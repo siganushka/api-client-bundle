@@ -40,6 +40,8 @@ final class ConfigurationTest extends TestCase
         static::assertSame($processedConfig, [
             'wechat' => [
                 'enabled' => false,
+                'open_appid' => null,
+                'open_secret' => null,
                 'mchid' => null,
                 'mchkey' => null,
                 'client_cert_file' => null,
@@ -56,7 +58,9 @@ final class ConfigurationTest extends TestCase
     {
         $config = [
             'appid' => 'test_appid',
-            'appsecret' => 'test_appsecret',
+            'secret' => 'test_secret',
+            'open_appid' => 'test_open_appid',
+            'open_secret' => 'test_open_secret',
             'mchid' => 'test_mchid',
             'mchkey' => 'test_mchkey',
             'client_cert_file' => 'test_client_cert_file',
@@ -77,7 +81,7 @@ final class ConfigurationTest extends TestCase
         $this->expectExceptionMessage('The child config "appid" under "siganushka_api_client.wechat" must be configured');
 
         $config = [
-            'appsecret' => 'test_appsecret',
+            'secret' => 'test_secret',
         ];
 
         $this->processor->processConfiguration($this->configuration, [
@@ -85,10 +89,10 @@ final class ConfigurationTest extends TestCase
         ]);
     }
 
-    public function testCustomWechatMissingAppsecretException(): void
+    public function testCustomWechatMissingSecretException(): void
     {
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('The child config "appsecret" under "siganushka_api_client.wechat" must be configured');
+        $this->expectExceptionMessage('The child config "secret" under "siganushka_api_client.wechat" must be configured');
 
         $config = [
             'appid' => 'test_appid',
@@ -127,7 +131,7 @@ final class ConfigurationTest extends TestCase
         ]);
     }
 
-    public function testCustomGithubMissingAppsecretException(): void
+    public function testCustomGithubMissingClientSecretException(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('The child config "client_secret" under "siganushka_api_client.github" must be configured');

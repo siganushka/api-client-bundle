@@ -50,7 +50,9 @@ class SiganushkaApiClientExtension extends Extension
         $configurationDef = $container->getDefinition('siganushka.api_client.wechat.configuration');
         $configurationDef->setArgument(0, [
             'appid' => $config['appid'],
-            'appsecret' => $config['appsecret'],
+            'secret' => $config['secret'],
+            'open_appid' => $config['open_appid'],
+            'open_secret' => $config['open_secret'],
             'mchid' => $config['mchid'],
             'mchkey' => $config['mchkey'],
             'client_cert_file' => $config['client_cert_file'],

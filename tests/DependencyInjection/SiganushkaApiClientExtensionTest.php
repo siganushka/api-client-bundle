@@ -40,7 +40,7 @@ class SiganushkaApiClientExtensionTest extends TestCase
     {
         $configs = [
             'appid' => 'test_appid',
-            'appsecret' => 'test_appsecret',
+            'secret' => 'test_secret',
             'mchid' => 'test_mchid',
             'mchkey' => 'test_mchkey',
             'client_cert_file' => 'test_client_cert_file',
@@ -67,7 +67,7 @@ class SiganushkaApiClientExtensionTest extends TestCase
         /**
          * @var array{
          *  appid: string,
-         *  appsecret: string,
+         *  secret: string,
          *  mchid: string,
          *  mchkey: string,
          *  client_cert_file: string,
@@ -78,7 +78,7 @@ class SiganushkaApiClientExtensionTest extends TestCase
         $configurationArgs = $configurationDef->getArgument(0);
 
         static::assertSame($configs['appid'], $configurationArgs['appid']);
-        static::assertSame($configs['appsecret'], $configurationArgs['appsecret']);
+        static::assertSame($configs['secret'], $configurationArgs['secret']);
         static::assertSame($configs['mchid'], $configurationArgs['mchid']);
         static::assertSame($configs['mchkey'], $configurationArgs['mchkey']);
         static::assertSame($configs['client_cert_file'], $configurationArgs['client_cert_file']);
