@@ -30,6 +30,5 @@
         "psr-4": {
             "Siganushka\\ApiClientBundle\\Tests\\": "tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

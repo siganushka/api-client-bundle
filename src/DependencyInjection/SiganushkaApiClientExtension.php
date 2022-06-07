@@ -21,22 +21,22 @@ class SiganushkaApiClientExtension extends Extension
         $loader->load('services.php');
 
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $configs = $this->processConfiguration($configuration, $configs);
 
-        if ($this->isConfigEnabled($container, $config['wechat'])) {
+        if ($this->isConfigEnabled($container, $configs['wechat'])) {
             if (!InstalledVersions::isInstalled('siganushka/wechat-api')) {
                 throw new \LogicException('Wechat API support cannot be enabled as the Wechat API is not installed. Try running "composer require siganushka/wechat-api".');
             }
 
-            $this->registerWechatConfiguration($config['wechat'], $container, $loader);
+            $this->registerWechatConfiguration($configs['wechat'], $container, $loader);
         }
 
-        if ($this->isConfigEnabled($container, $config['github'])) {
+        if ($this->isConfigEnabled($container, $configs['github'])) {
             if (!InstalledVersions::isInstalled('siganushka/github-api')) {
                 throw new \LogicException('Github API support cannot be enabled as the Github API is not installed. Try running "composer require siganushka/github-api".');
             }
 
-            $this->registerGithubConfiguration($config['github'], $container, $loader);
+            $this->registerGithubConfiguration($configs['github'], $container, $loader);
         }
     }
 

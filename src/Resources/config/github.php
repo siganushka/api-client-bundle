@@ -19,7 +19,8 @@ return static function (ContainerConfigurator $container) {
             ->alias(Authorize::class, 'siganushka.api_client.github.authorize')
 
         ->set('siganushka.api_client.github.access_token', AccessToken::class)
-            ->arg(0, service('siganushka.api_client.github.configuration'))
+            ->arg(0, service('cache.app'))
+            ->arg(1, service('siganushka.api_client.github.configuration'))
             ->tag('siganushka.api_client.request')
 
         ->set('siganushka.api_client.github.user', User::class)
