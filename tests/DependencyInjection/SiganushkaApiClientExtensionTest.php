@@ -31,12 +31,12 @@ class SiganushkaApiClientExtensionTest extends TestCase
         static::assertTrue($container->hasAlias(RequestRegistryInterface::class));
 
         $apiClientDef = $container->getDefinition('siganushka.api_client.request_client');
-        static::assertSame('http_client', (string) $apiClientDef->getArgument(0));
-        static::assertSame('siganushka.api_client.request_registry', (string) $apiClientDef->getArgument(1));
-        static::assertInstanceOf(TaggedIteratorArgument::class, $apiClientDef->getArgument(2));
+        static::assertSame('siganushka.api_client.request_registry', (string) $apiClientDef->getArgument(0));
+        static::assertInstanceOf(TaggedIteratorArgument::class, $apiClientDef->getArgument(1));
 
         $requestRegistryDef = $container->getDefinition('siganushka.api_client.request_registry');
-        static::assertInstanceOf(TaggedIteratorArgument::class, $requestRegistryDef->getArgument(0));
+        static::assertSame('http_client', (string) $requestRegistryDef->getArgument(0));
+        static::assertInstanceOf(TaggedIteratorArgument::class, $requestRegistryDef->getArgument(1));
     }
 
     public function testWechatConfigs(): void

@@ -42,8 +42,7 @@ return static function (ContainerConfigurator $container) {
             ->tag('siganushka.api_client.request')
 
         ->set('siganushka.api_client.wechat.extension.access_token', AccessTokenExtension::class)
-            ->arg(0, service('http_client'))
-            ->arg(1, service('siganushka.api_client.request_registry'))
+            ->arg(0, service('siganushka.api_client.request_registry'))
             ->tag('siganushka.api_client.request_extension')
 
         ->set('siganushka.api_client.wechat.jsapi.config_utils', JsapiConfigUtils::class)
