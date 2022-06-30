@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Siganushka\ApiClientBundle\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Siganushka\ApiClient\RequestExtensionInterface;
 use Siganushka\ApiClient\RequestInterface;
 use Siganushka\ApiClientBundle\SiganushkaApiClientBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,6 +21,8 @@ class SiganushkaApiClientBundleTest extends TestCase
 
         $instanceof = $container->getAutoconfiguredInstanceof();
         static::assertArrayHasKey(RequestInterface::class, $instanceof);
+        static::assertArrayHasKey(RequestExtensionInterface::class, $instanceof);
         static::assertTrue($instanceof[RequestInterface::class]->hasTag('siganushka.api_client.request'));
+        static::assertTrue($instanceof[RequestExtensionInterface::class]->hasTag('siganushka.api_client.request_extension'));
     }
 }
