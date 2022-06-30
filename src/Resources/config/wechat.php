@@ -10,8 +10,10 @@ use Siganushka\ApiClient\Wechat\Core\CallbackIp;
 use Siganushka\ApiClient\Wechat\Core\ServerIp;
 use Siganushka\ApiClient\Wechat\Extension\AccessTokenExtension;
 use Siganushka\ApiClient\Wechat\Jsapi\ConfigUtils as JsapiConfigUtils;
-use Siganushka\ApiClient\Wechat\Message\Template\Message;
+use Siganushka\ApiClient\Wechat\Miniapp\Qrcode;
 use Siganushka\ApiClient\Wechat\Miniapp\SessionKey;
+use Siganushka\ApiClient\Wechat\Miniapp\Wxacode;
+use Siganushka\ApiClient\Wechat\Miniapp\WxacodeUnlimited;
 use Siganushka\ApiClient\Wechat\OAuth\AccessToken as OAuthAccessToken;
 use Siganushka\ApiClient\Wechat\OAuth\Authorize;
 use Siganushka\ApiClient\Wechat\OAuth\CheckToken;
@@ -23,6 +25,7 @@ use Siganushka\ApiClient\Wechat\Payment\Refund;
 use Siganushka\ApiClient\Wechat\Payment\SignatureUtils;
 use Siganushka\ApiClient\Wechat\Payment\Transfer;
 use Siganushka\ApiClient\Wechat\Payment\Unifiedorder;
+use Siganushka\ApiClient\Wechat\Template\Message;
 use Siganushka\ApiClient\Wechat\Ticket\Ticket;
 
 return static function (ContainerConfigurator $container) {
@@ -49,12 +52,21 @@ return static function (ContainerConfigurator $container) {
             ->arg(0, service('siganushka.api_client.wechat.configuration'))
             ->alias(JsapiConfigUtils::class, 'siganushka.api_client.wechat.jsapi.config_utils')
 
-        ->set('siganushka.api_client.wechat.message.template.message', Message::class)
+        ->set('siganushka.api_client.wechat.template.message', Message::class)
             ->tag('siganushka.api_client.request')
 
         ->set('siganushka.api_client.wechat.miniapp.session_key', SessionKey::class)
             ->arg(0, service('cache.app'))
             ->arg(1, service('siganushka.api_client.wechat.configuration'))
+            ->tag('siganushka.api_client.request')
+
+        ->set('siganushka.api_client.wechat.miniapp.wxacode', Wxacode::class)
+            ->tag('siganushka.api_client.request')
+
+        ->set('siganushka.api_client.wechat.miniapp.wxacode_unlimited', WxacodeUnlimited::class)
+            ->tag('siganushka.api_client.request')
+
+        ->set('siganushka.api_client.wechat.miniapp.qrcode', Qrcode::class)
             ->tag('siganushka.api_client.request')
 
         ->set('siganushka.api_client.wechat.oauth.authorize', Authorize::class)
