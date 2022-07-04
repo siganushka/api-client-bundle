@@ -15,8 +15,8 @@ use Siganushka\ApiClient\Wechat\Miniapp\SessionKey;
 use Siganushka\ApiClient\Wechat\Miniapp\Wxacode;
 use Siganushka\ApiClient\Wechat\Miniapp\WxacodeUnlimited;
 use Siganushka\ApiClient\Wechat\OAuth\AccessToken as OAuthAccessToken;
-use Siganushka\ApiClient\Wechat\OAuth\Authorize;
 use Siganushka\ApiClient\Wechat\OAuth\CheckToken;
+use Siganushka\ApiClient\Wechat\OAuth\Client;
 use Siganushka\ApiClient\Wechat\OAuth\RefreshToken;
 use Siganushka\ApiClient\Wechat\OAuth\UserInfo;
 use Siganushka\ApiClient\Wechat\Payment\ConfigUtils as PaymentConfigUtils;
@@ -69,9 +69,9 @@ return static function (ContainerConfigurator $container) {
         ->set('siganushka.api_client.wechat.miniapp.qrcode', Qrcode::class)
             ->tag('siganushka.api_client.request')
 
-        ->set('siganushka.api_client.wechat.oauth.authorize', Authorize::class)
+        ->set('siganushka.api_client.wechat.oauth.client', Client::class)
             ->arg(0, service('siganushka.api_client.wechat.configuration'))
-            ->alias(Authorize::class, 'siganushka.api_client.wechat.oauth.authorize')
+            ->alias(Client::class, 'siganushka.api_client.wechat.oauth.client')
 
         ->set('siganushka.api_client.wechat.oauth.access_token', OAuthAccessToken::class)
             ->arg(0, service('siganushka.api_client.wechat.configuration'))
